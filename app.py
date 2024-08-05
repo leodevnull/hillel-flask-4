@@ -9,6 +9,7 @@ from serializers import serialize_products, serialize_categories
 app = Flask(__name__)
 
 import logging
+
 logger = logging.getLogger('peewee')
 logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.DEBUG)
@@ -18,7 +19,11 @@ logger.setLevel(logging.DEBUG)
 def products_api():
     if request.method == "GET":
         start = datetime.now()
+        query_name = request.args.get("name")
         products = Product.select(Product, Category).join(Category)
+
+        if query_name:
+            products = products.where(Product.name ** query_name)
 
         resp = serialize_products(products)
         end = datetime.now()
@@ -96,3 +101,7 @@ def categories_api():
         category.save()
 
         return category.model_dump(), 201
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
