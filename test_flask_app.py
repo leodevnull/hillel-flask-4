@@ -1,9 +1,11 @@
 import requests
 
+BASE_URL = 'http://127.0.0.1:5000'
+
 
 def test_product_create(name):
     # Create a new product
-    url = "http://127.0.0.1:5002/products"
+    url = BASE_URL + '/products'
 
     data = {
         "name": name,
@@ -20,7 +22,7 @@ def test_product_create(name):
 
 def test_product_delete():
     # Delete a product by index
-    url = "http://localhost:5002/products/10"
+    url = BASE_URL + '/products/10'
 
     response = requests.delete(url)
 
@@ -30,7 +32,7 @@ def test_product_delete():
 
 def test_product_update():
     # Update a product by index
-    url = "http://localhost:5002/products/3"
+    url = BASE_URL + '/products/3'
 
     data = {
         "is_18_plus": False
@@ -44,7 +46,7 @@ def test_product_update():
 
 def test_category_create():
     # Create a new category
-    url = "http://localhost:5002/categories"
+    url = BASE_URL + '/categories'
 
     data = {
         "name": "Drinks"
